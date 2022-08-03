@@ -25,14 +25,15 @@ public class MQService {
 	private JmsTemplate jmsTemplate;
 
 	public String sendHelloWorld() {
+	
 	public void setQueueName(String newQueueName) {
     this.queueName = newQueueName;
     return;
-}
+	}
 
-public String getQueueName() {
+	public String getQueueName() {
     return this.queueName;
-}
+	}
 		
 		final Logger LOG = LoggerFactory.getLogger(MQService.class);
 
