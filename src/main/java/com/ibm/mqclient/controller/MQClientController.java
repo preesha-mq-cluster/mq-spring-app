@@ -23,17 +23,7 @@ import io.swagger.annotations.ApiResponse;
 @EnableJms
 @Api(description = "Set of endpoints for putting and getting messages to an MQ queue.")
 public class MQClientController {
-	@GetMapping(value = "/api/send-to-queue")
-	@ApiOperation(value = "Put a 'Hello World!' message on the MQ queue specified as parameter.", notes = "This api puts a hello world text message on the MQ queue specified as parameter.")
-	@ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully put message on the specified queue."), @ApiResponse(code = 500, message = "Error putting message on the specified queue.")})
-	ResponseData sendHelloToQueueName(@RequestParam String queueName) {
-	mqService.setQueueName(queueName);
-   		String dataSentToQueue = mqService.sendHelloWorld();
-   		final String text = "Successfully sent message to queue " + mqService.getQueueName();
-   		ResponseData responseData = new ResponseData("OK", text, dataSentToQueue);
-   		return responseData;
-}
-
+	
 	@Autowired
 	private MQService mqService;
 
@@ -68,5 +58,16 @@ public class MQClientController {
 		String dataSentToQueue = mqService.sendJson(requestMap);
 		ResponseData responseData = new ResponseData("OK", "Successfully sent record to MQ", dataSentToQueue);
 		return responseData;
+	}
+
+	@GetMapping(value = "/api/send-to-queue")
+	@ApiOperation(value = "Put a 'Hello World!' message on the MQ queue specified as parameter.", notes = "This api puts a hello world text message on the MQ queue specified as parameter.")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully put message on the specified queue."), @ApiResponse(code = 500, message = "Error putting message on the specified queue.")})
+	ResponseData sendHelloToQueueName(@RequestParam String queueName) {
+	mqService.setQueueName(queueName);
+   		String dataSentToQueue = mqService.sendHelloWorld();
+   		final String text = "Successfully sent message to queue " + mqService.getQueueName();
+   		ResponseData responseData = new ResponseData("OK", text, dataSentToQueue);
+   		return responseData;
 	}
 }
