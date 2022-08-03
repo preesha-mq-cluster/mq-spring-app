@@ -23,14 +23,7 @@ import io.swagger.annotations.ApiResponse;
 @EnableJms
 @Api(description = "Set of endpoints for putting and getting messages to an MQ queue.")
 public class MQClientController {
-
-	@Autowired
-	private MQService mqService;
-
-	public MQClientController(MQService mqService) {
-		this.mqService = mqService;
-	}
-	@GetMapping(value = "/api/send-to-queue")
+		@GetMapping(value = "/api/send-to-queue")
 	@ApiOperation(value = "Put a 'Hello World!' message on the MQ queue specified as parameter.", notes = "This api puts a hello world text message on the MQ queue specified as parameter.")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully put message on the specified queue."), @ApiResponse(code = 500, message = "Error putting message on the specified queue.")})
 	ResponseData sendHelloToQueueName(@RequestParam String queueName) {
@@ -40,6 +33,13 @@ public class MQClientController {
    		ResponseData responseData = new ResponseData("OK", text, dataSentToQueue);
    		return responseData;
 }
+
+	@Autowired
+	private MQService mqService;
+
+	public MQClientController(MQService mqService) {
+		this.mqService = mqService;
+	}
 	
 	@GetMapping("/api/send-hello-world")
 	@ApiOperation(value = "Put a hello world message on the MQ queue.", notes = "This api puts a hello world text message on the MQ queue.")
